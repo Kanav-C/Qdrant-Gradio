@@ -19,7 +19,7 @@ db = Qdrant(client=client, embeddings=embeddings, collection_name="v_db")
 print(db)
 print("######")
 
-query = "How has the COVID-19 pandemic impacted the academic performance, mental health, and social development of students across different educational levels?"
+query = "What are some advantages of using mobile devices for language learning, according to the study findings?"
 
 docs = db.similarity_search_with_score(query=query, k=5)
 for doc, score in docs:
