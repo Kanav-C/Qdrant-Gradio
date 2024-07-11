@@ -6,7 +6,7 @@ from langchain.document_loaders import PyPDFLoader
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams
 
-pdf_folder_path = "C:\\Users\\DELL\\Desktop\\RAG\\Pdf"
+pdf_folder_path = "C:\\Users\\DELL\\Downloads\\HR\\HR"
 
 def load_pdfs_from_folder(folder_path):
     documents = []
@@ -31,7 +31,7 @@ client = QdrantClient(url=url, prefer_grpc=False)
 
 
 client.create_collection(
-    collection_name="rag_db",
+    collection_name="hr_db",
     vectors_config=VectorParams(size=384, distance=Distance.COSINE)
 )
 
@@ -40,7 +40,7 @@ qdrant = Qdrant.from_documents(
     embedding=embeddings,
     url=url,
     prefer_grpc=False,
-    collection_name="rag_db"
-)
+    collection_name="hr_db"
+)  
 
 print("Vector DB Successfully Created!")
