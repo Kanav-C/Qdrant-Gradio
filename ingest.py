@@ -3,6 +3,8 @@ from langchain.vectorstores import Qdrant
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import Distance, VectorParams
 
 pdf_folder_path = "C:\\Users\\DELL\\Desktop\\RAG\\Pdf"
 
@@ -25,13 +27,20 @@ embeddings = SentenceTransformerEmbeddings(model_name=model_name)
 
 print('Embedding Model Loading...')
 url = "http://localhost:6333"
+client = QdrantClient(url=url, prefer_grpc=False)
+
+
+client.create_collection(
+    collection_name="rag_db",
+    vectors_config=VectorParams(size=384, distance=Distance.COSINE)
+)
 
 qdrant = Qdrant.from_documents(
     documents=texts,
     embedding=embeddings,
     url=url,
     prefer_grpc=False,
-    collection_name="v_db"
+    collection_name="rag_db"
 )
 
 print("Vector DB Successfully Created!")
